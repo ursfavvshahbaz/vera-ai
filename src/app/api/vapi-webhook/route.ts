@@ -12,15 +12,16 @@ export async function POST(req: Request) {
       const analysis = body.message.analysis;
 
       // Firestore mein Admin Table ke liye data save karna
-      await addDoc(collection(db, "admin_logs"), {
+      await addDoc(collection(db, "interview_reports"), {
+        userId: callData.customer?.number || "dummy-id",
         userName: callData.customer?.name || "Anonymous",
         userEmail: callData.customer?.extension || "N/A",
         role: callData.assistant?.name || "Technical Role",
         duration: `${Math.round(callData.duration)}s`,
         status: "Completed",
-        score: analysis?.structuredData?.score || "N/A", // Dashboard sync
+        score: analysis?.structuredData?.score || "0", // Dashboard sync
         transcript: analysis?.transcript || "",
-        timestamp: serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
     }
 
