@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 import styles from './dashboard.module.scss';
 import { 
   Globe, Code, LayoutDashboard, Database, BrainCircuit, Shield, Smartphone, 
@@ -75,6 +76,7 @@ export default function Dashboard() {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [reports, setReports] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   const ADMIN_EMAIL = "shahbazalam8421@gmail.com";
 
@@ -83,12 +85,14 @@ export default function Dashboard() {
       if (user) {
         setCurrentUser(user);
         fetchDashboardData(user.uid);
+        setLoading(false);
       } else {
         const demoData = localStorage.getItem("vera_demo_user");
         if (demoData){
           const fakeUser = JSON.parse(demoData);
           setCurrentUser(fakeUser);
           fetchDashboardData("dummy-user-id-from-db");
+          setLoading(false);
         } else {
           router.push('/sign-in');
         }
@@ -96,7 +100,9 @@ export default function Dashboard() {
     });
     return () => unsubscribe();
   }, [router]);
-
+  
+  if (loading) return 
+  <div className={styles.loader}>Loading Vera AI...</div>;
   const fetchDashboardData = async (uid: string) => {
     try {
       const q = query(
@@ -255,17 +261,18 @@ export default function Dashboard() {
               <h2 className={styles.catHeading}>{cat.name}</h2>
               <div className={styles.roleGrid}>
                 {catRoles.map((role) => (
-                  <div key={role.id} className={styles.roleCard} style={{ '--role-color': role.color } as any}>
+                  <div key={role.id} className={styles.roleCard} 
+                  style={{ '--role-color': role.color } as React.CSSProperties}>
                     
 
                     <div className={styles.roleImageContainer}>
                       <img 
-                      src={`/assets/roles/${role.id}.png`} // Har role ke liye ek unique image link
+                      src={`/assets/roles/${role.id.toLowerCase}.png`} // Har role ke liye ek unique image link
                       alt={role.name} 
                       className={styles.roleImg}
                       onError={(e) => {
                         // Agar image load na ho toh ye console mein error dikhayega
-                        console.log("Image not found at:", `/assets/roles/${role.id}.png`);
+                       (e.target as HTMLImageElement).src = '/assets/roles/default.png';
                       }}/>
                     </div>
 
@@ -288,21 +295,20 @@ export default function Dashboard() {
         })}
 
         <section id="gaming" className={styles.categorySection}>
-  <h2 className={styles.catHeading}>Gaming Arcade</h2>
-  <div className={styles.roleGrid}>
-    {arcadeGames.map((game, i) => (
-      <div key={i} className={styles.roleCard} onClick={() => handleGameClick(game.title)} style={{cursor: 'pointer', '--role-color': '#2C666E'} as any}>
-        
-        {/* GAME IMAGE ADDED HERE */}
-        <div className={styles.roleImageContainer}>
-          <img 
-            src={`/assets/arcade/${game.title.toLowerCase().replace(' ', '-')}.png`} 
-            alt={game.title} 
-            className={styles.roleImg}
-            onError={(e) => {
-                (e.target as HTMLImageElement).src = '/assets/arcade/default-game.png';
-            }}
-          />
+          <h2 className={styles.catHeading}>Gaming Arcade</h2>
+          <div className={styles.roleGrid}>
+            {arcadeGames.map((game, i) => (
+              <div key={i} className={styles.roleCard} onClick={() => handleGameClick(game.title)} style={{cursor: 'pointer', '--role-color': '#2C666E'} as any}>
+                <div className={styles.roleImageContainer}>
+                  <img 
+                  src={`/assets/arcade/${game.title.toLowerCase().replace(' ', '-')}.png`} 
+                  alt={game.title} 
+                  className={styles.roleImg}
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    const imgElement = e.currentTarget; 
+                    imgElement.onerror = null; // Infinite loop ko rokne ke liye
+                    imgElement.src = '/assets/arcade/default-game.png'; // Default image path
+                  }}/>
         </div>
 
         <div className={styles.roleIcon}>{game.icon}</div>
