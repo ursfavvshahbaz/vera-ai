@@ -1,0 +1,44 @@
+/* src/app/globals.css */
+:root {
+  --bg-primary: #F0EDEE;
+  --text-primary: #2C666E;
+  --text-secondary: #6B7280;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --border-color: #D1D5DB;
+}
+
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Kisi bhi automatic dark mode override ko rokne ke liye */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #F0EDEE;
+    --text-primary: #2C666E;
+  }
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Scrollbars hataane ke liye */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* src/app/globals.css */
+.neon-border {
+  border: 2px solid #2C666E !important;
+  box-shadow: 0 0 15px rgba(44, 102, 110, 0.3) !important;
+}
+
+.neon-hover:hover {
+  box-shadow: 0 0 25px rgba(44, 102, 110, 0.5) !important;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,164 @@
+.container {
+  min-height: 100vh;
+  background-color: #F0EDEE; 
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto; // Scroll enable kiya hai
+  scroll-behavior: smooth; // Smooth animation ke liye
+  font-family: sans-serif;
+}
+
+.navbar {
+  display: flex;
+  padding: 40px 80px;
+  z-index: 10;
+  .logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #2C666E;
+    letter-spacing: -1.5px;
+  }
+}
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  padding: 0 20px;
+}
+
+.glassCard {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 40px;
+  padding: 80px 40px;
+  text-align: center;
+  max-width: 900px;
+  box-shadow: 0 25px 50px -12px rgba(44, 102, 110, 0.1);
+
+  .badge {
+    background: rgba(44, 102, 110, 0.1);
+    color: #2C666E;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: #2C666E;
+    line-height: 1.1;
+    margin: 30px 0;
+    span { opacity: 0.5; }
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: #5E7C81;
+    max-width: 600px;
+    margin: 0 auto 50px;
+  }
+}
+
+.ctaGroup {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 25px;
+
+  .primaryBtn {
+    background: #2C666E;
+    color: #F0EDEE;
+    padding: 20px 45px;
+    border-radius: 18px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.2s;
+    &:hover { transform: translateY(-3px); }
+  }
+
+  .secondaryBtn {
+    background: transparent;
+    border: 2px solid #D1D5DB;
+    color: #2C666E;
+    padding: 20px 45px;
+    border-radius: 18px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+}
+
+.extraLinkWrapper {
+  margin-top: 20px;
+  .extraLinkText { color: #5E7C81; font-size: 0.9rem; }
+  .extraLink { color: #2C666E; font-weight: 700; text-decoration: underline; }
+}
+
+/* ✅ HOW IT WORKS SECTION STYLING */
+.infoSection {
+  padding: 80px 40px; /* Thoda padding adjust kiya */
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 5;
+  
+  /* ✅ YE LINE SABSE IMPORTANT HAI */
+  scroll-margin-top: 50px;
+}
+
+.sectionHeading {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #2C666E;
+  margin-bottom: 60px;
+}
+
+.stepGrid {
+  display: flex;
+  flex-direction: column; /* Image ke hisaab se stack kar rahe hain */
+  gap: 40px;
+  align-items: center;
+  padding-bottom: 100px; /* Last card ke neeche extra space */
+}
+
+.stepCard {
+  background: white;
+  padding: 40px;
+  border-radius: 40px; /* More rounded like image */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  
+  .stepNumber {
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(44, 102, 110, 0.08);
+    margin-bottom: -25px;
+  }
+  h3 { 
+    color: #2C666E; 
+    font-weight: 800; 
+    margin-bottom: 10px; 
+  }
+  p { color: #5E7C81; line-height: 1.6; }
+}
+
+.blob1, .blob2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(44, 102, 110, 0.1) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 1;
+
+}
+.blob1 { top: -100px; right: -100px; } 
+.blob2 { bottom: -100px; left: -100px; }

@@ -1,0 +1,108 @@
+.registerContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  padding: 20px;
+  font-family: 'Georgia', serif;
+
+  .card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+  
+  // Neon Border Logic
+  border: 2px solid #2C666E; 
+  box-shadow: 0 0 15px rgba(44, 102, 110, 0.3), 
+              inset 0 0 10px rgba(44, 102, 110, 0.1);
+              
+  padding: 40px;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  transition: all 0.3s ease;
+
+    h1 {
+      color: #2d5a61;
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 15px;
+      border: none;
+      background: white;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+
+      &:focus {
+        box-shadow: 0 0 0 2px #2d5a61;
+      }
+    }
+
+    select {
+      background-color: #2d5a61;
+      color: white;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    .submitBtn {
+      margin-top: 10px;
+      padding: 16px;
+      background-color: #2d5a61;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 0 25px rgba(44, 102, 110, 0.5);
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .footerLink {
+    margin-top: 25px;
+    color: #4b5563;
+    
+    a {
+      color: #2d5a61;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+}

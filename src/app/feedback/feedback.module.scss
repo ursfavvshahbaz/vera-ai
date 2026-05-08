@@ -1,0 +1,240 @@
+.feedbackWrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('/images/main-bg.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+  overflow-y: auto;
+}
+
+.feedbackContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadingScreen {
+  height: 100vh;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #4fd1c5;
+  
+  .brainIcon { font-size: 5rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+  .spinner { animation: spin 1s linear infinite; }
+}
+
+.scoreBadge {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(79, 209, 197, 0.2);
+  margin: 40px 0;
+  box-shadow: 0 0 60px rgba(79, 209, 197, 0.1);
+
+  .scoreValue { font-size: 5rem; font-weight: 900; color: #4fd1c5; }
+  .scoreLabel { font-size: 0.8rem; opacity: 0.5; letter-spacing: 2px; }
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+
+  h3 { margin-bottom: 20px; font-size: 1.4rem; }
+  .list {
+    list-style: none; padding: 0;
+    li { margin-bottom: 12px; padding-left: 15px; border-left: 3px solid #4fd1c5; opacity: 0.8; }
+  }
+}
+
+.summaryBox {
+  margin-top: 40px;
+  background: linear-gradient(135deg, rgba(79, 209, 197, 0.1), rgba(15, 23, 42, 0.5));
+  padding: 40px;
+  border-radius: 30px;
+  border: 1px solid rgba(79, 209, 197, 0.2);
+  text-align: center;
+  width: 100%;
+  
+  .summaryText { font-size: 1.3rem; line-height: 1.7; font-style: italic; }
+}
+
+.backBtn {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  &:hover { background: rgba(255, 255, 255, 0.1); }
+}
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+/* Pehle wala saara CSS rahega, bas ye add/update kar do */
+
+.actionButtons {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.printBtn {
+  background: #4fd1c5;
+  color: #0f172a;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(79, 209, 197, 0.2);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #3bc0b4;
+    box-shadow: 0 15px 30px rgba(79, 209, 197, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Print optimizations */
+@media print {
+  .backBtn, .actionButtons {
+    display: none !important;
+  }
+  .feedbackWrapper {
+    background: white !important;
+    color: black !important;
+  }
+}
+/* Add or update these specific parts */
+
+.feedbackContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px; /* Padding thoda kam kiya taaki content upar aaye */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.actionButtons {
+  margin-top: 50px;
+  padding-bottom: 50px; /* Neeche thoda space rakhein */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 100; /* Isko sabse upar rakhein */
+}
+
+.printBtn {
+  background: #4fd1c5 !important; /* Force green color */
+  color: #0f172a !important;
+  padding: 18px 40px;
+  border-radius: 50px; /* Pill shape for better look */
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(79, 209, 197, 0.4);
+  }
+}
+.feedbackWrapper {
+  /* 100vh ki jagah min-height use karenge taaki content bada ho toh page scroll ho */
+  min-height: 100vh; 
+  width: 100%;
+  
+  /* Background fix taaki scroll karte waqt image piche hi rahe */
+  background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('/images/main-bg.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  
+  /* Scrolling enable karne ke liye */
+  overflow-y: auto; 
+  display: block; /* Flexbox hatane se scrolling natural ho jati hai */
+  color: white;
+}
+
+.feedbackContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px 120px 20px; /* Neeche extra padding taaki button chipka na rahe */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Ensure actions buttons are visible and not hidden */
+.actionButtons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  padding-bottom: 20px;
+}
+
+.printBtn {
+  /* Existing styles... */
+  z-index: 10;
+  cursor: pointer;
+  position: relative;
+}
