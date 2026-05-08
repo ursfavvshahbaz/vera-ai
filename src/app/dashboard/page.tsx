@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
-import Image from 'next/image';
 import styles from './dashboard.module.scss';
 import { 
   Globe, Code, LayoutDashboard, Database, BrainCircuit, Shield, Smartphone, 
@@ -12,7 +11,7 @@ import {
 } from 'lucide-react';
 import { auth, db } from '../lib/firebase'; 
 import { signOut, onAuthStateChanged } from 'firebase/auth';
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import GameModal from '../../components/GameModal';
 
 // --- DATA ---
@@ -85,24 +84,21 @@ export default function Dashboard() {
       if (user) {
         setCurrentUser(user);
         fetchDashboardData(user.uid);
-        setLoading(false);
       } else {
         const demoData = localStorage.getItem("vera_demo_user");
         if (demoData){
           const fakeUser = JSON.parse(demoData);
           setCurrentUser(fakeUser);
           fetchDashboardData("dummy-user-id-from-db");
-          setLoading(false);
         } else {
           router.push('/sign-in');
         }
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, [router]);
-  
-  if (loading) return 
-  <div className={styles.loader}>Loading Vera AI...</div>;
+
   const fetchDashboardData = async (uid: string) => {
     try {
       const q = query(
@@ -161,6 +157,10 @@ export default function Dashboard() {
     role.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  if (loading) {
+  return <div className={styles.loader}>Loading Vera AI...</div>;
+}
+
   return (
     <div className={styles.dashboardLayout}>
       <aside className={styles.sidebar}>
@@ -182,7 +182,6 @@ export default function Dashboard() {
           ))}
         </nav>
 
-        {/* User Profile Mini (Logout se pehle) */}
         <div className={styles.userProfileMini}>
           <div className={styles.avatar}>
             {currentUser?.photoURL ? (
@@ -242,7 +241,7 @@ export default function Dashboard() {
             <h2 className={styles.catHeading}>Custom Admin Portals</h2>
             <div className={styles.roleGrid}>
               {filteredAdminRoles.map((role) => (
-                <div key={role.id} className={styles.roleCard} style={{ '--role-color': role.color } as any}>
+                <div key={role.id} className={styles.roleCard} style={{ '--role-color': role.color } as React.CSSProperties}>
                   <div className={styles.roleIcon}>{role.icon}</div>
                   <h3>{role.name}</h3>
                   <p>{role.desc}</p>
@@ -261,19 +260,15 @@ export default function Dashboard() {
               <h2 className={styles.catHeading}>{cat.name}</h2>
               <div className={styles.roleGrid}>
                 {catRoles.map((role) => (
-                  <div key={role.id} className={styles.roleCard} 
-                  style={{ '--role-color': role.color } as React.CSSProperties}>
-                    
-
+                  <div key={role.id} className={styles.roleCard} style={{ '--role-color': role.color } as React.CSSProperties}>
                     <div className={styles.roleImageContainer}>
                       <img 
-                      src={`/assets/roles/${role.id.toLowerCase}.png`} // Har role ke liye ek unique image link
-                      alt={role.name} 
-                      className={styles.roleImg}
-                      onError={(e) => {
-                        // Agar image load na ho toh ye console mein error dikhayega
-                       (e.target as HTMLImageElement).src = '/assets/roles/default.png';
-                      }}/>
+                        src={`/assets/roles/${role.id.toLowerCase()}.png`} 
+                        alt={role.name} 
+                        className={styles.roleImg}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/assets/roles/default.png';
+                        }}/>
                     </div>
 
                     <div className={styles.roleIcon} style={{ color: role.color }}>{role.icon}</div>
@@ -298,27 +293,27 @@ export default function Dashboard() {
           <h2 className={styles.catHeading}>Gaming Arcade</h2>
           <div className={styles.roleGrid}>
             {arcadeGames.map((game, i) => (
-              <div key={i} className={styles.roleCard} onClick={() => handleGameClick(game.title)} style={{cursor: 'pointer', '--role-color': '#2C666E'} as any}>
+              <div key={i} className={styles.roleCard} onClick={() => handleGameClick(game.title)} style={{cursor: 'pointer', '--role-color': '#2C666E'} as React.CSSProperties}>
                 <div className={styles.roleImageContainer}>
                   <img 
-                  src={`/assets/arcade/${game.title.toLowerCase().replace(' ', '-')}.png`} 
-                  alt={game.title} 
-                  className={styles.roleImg}
-                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                    const imgElement = e.currentTarget; 
-                    imgElement.onerror = null; // Infinite loop ko rokne ke liye
-                    imgElement.src = '/assets/arcade/default-game.png'; // Default image path
-                  }}/>
-        </div>
+                    src={`/assets/arcade/${game.title.toLowerCase().replace(/\s+/g, '-')}.png`} 
+                    alt={game.title} 
+                    className={styles.roleImg}
+                    onError={(e) => {
+                      const imgElement = e.currentTarget; 
+                      imgElement.onerror = null;
+                      imgElement.src = '/assets/arcade/default-game.png';
+                    }}/>
+                </div>
 
-        <div className={styles.roleIcon}>{game.icon}</div>
-        <h3>{game.title}</h3>
-        <p>{game.desc}</p>
-        <button className={styles.startBtn}>Enter Arcade</button>
-      </div>
-    ))}
-  </div>
-</section>
+                <div className={styles.roleIcon}>{game.icon}</div>
+                <h3>{game.title}</h3>
+                <p>{game.desc}</p>
+                <button className={styles.startBtn}>Enter Arcade</button>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <GameModal isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} gameTitle={selectedGame} />
